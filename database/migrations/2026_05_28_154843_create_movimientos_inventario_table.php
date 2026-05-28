@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('movimientos_inventario', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('producto_id')->constrained('productos');
+            $table->foreignId('user_id')->constrained('users');
+
+            $table->enum('tipo_movimiento', ['entrada', 'salida', 'ajuste', 'devolucion']);
+            $table->string('referencia_tipo')->nullable();
+            $table->unsignedBigInteger('referencia_id')->nullable();
+
+            $table->decimal('cantidad', 10, 2);
+            $table->decimal('stock_anterior', 10, 2);
+            $table->decimal('stock_nuevo', 10, 2);
+
+            $table->text('observacion')->nullable();
             $table->timestamps();
         });
     }

@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('garantias', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('venta_id')->constrained('ventas');
+            $table->foreignId('producto_id')->constrained('productos');
+            $table->foreignId('cliente_id')->constrained('users');
+
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin')->nullable();
+
+            $table->text('descripcion_falla')->nullable();
+
+            $table->enum('estado', ['activa', 'proceso', 'resuelta', 'rechazada'])->default('activa');
+            $table->enum('solucion', ['cambio', 'reparacion', 'devolucion'])->nullable();
+
             $table->timestamps();
         });
     }

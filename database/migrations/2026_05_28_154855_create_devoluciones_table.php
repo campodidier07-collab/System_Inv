@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('devoluciones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('venta_id')->constrained('ventas');
+            $table->foreignId('cliente_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users');
+
+            $table->date('fecha_devolucion');
+            $table->text('motivo')->nullable();
+
+            $table->enum('estado', ['pendiente', 'aprobada', 'rechazada'])->default('pendiente');
+            $table->decimal('total_devolucion', 12, 2)->default(0);
+
             $table->timestamps();
         });
     }

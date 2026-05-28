@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('devolucion_detalles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('devolucion_id')->constrained('devoluciones')->cascadeOnDelete();
+            $table->foreignId('producto_id')->constrained('productos');
+
+            $table->decimal('cantidad', 10, 2);
+            $table->decimal('precio_unitario', 12, 2);
+            $table->decimal('subtotal', 12, 2);
+
+            $table->enum('accion', ['reintegrar_stock', 'no_reintegrar_stock', 'garantia']);
+
             $table->timestamps();
         });
     }
